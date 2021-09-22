@@ -109,7 +109,7 @@ export default function Cities() {
                             {item.name}
                           </Typography>
                           <Typography>code:{item.code}</Typography>
-                          <Typography>Click view to find locations</Typography>
+                          <Typography>Click view to find more about locations</Typography>
                         </CardContent>
                         <CardActions>
                           <Link to={`/cityDetail/${item.id}`} className="link2">
