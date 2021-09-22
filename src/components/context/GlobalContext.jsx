@@ -8,7 +8,15 @@ const initialState = {
 
     id : null,
     open : false
-  }
+  },
+
+  cityEdit : {
+
+    id : null,
+    open : false
+  },
+  
+
 };
 
 console.log(initialState);
@@ -48,6 +56,22 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  function toggleCityEdit (cityEdit) {
+
+
+
+    dispatch({
+      type: "TOGGLE_CITY_EDIT",
+      payload: cityEdit,
+    });
+  }
+
+
+  
+
+
+
+
 
 
   return (
@@ -56,9 +80,11 @@ export const GlobalProvider = ({ children }) => {
         user: state.user,
         searchTerm : state.searchTerm,
         locationDialogue : state.locationDialogue,
+        cityEdit : state.cityEdit,
         addUser,
         addSearchTerm,
-        toggleLocationDialoge
+        toggleLocationDialoge,
+        toggleCityEdit
       }}
     >
       {children}

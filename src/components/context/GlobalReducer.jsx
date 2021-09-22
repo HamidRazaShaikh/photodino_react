@@ -1,41 +1,35 @@
 const GlobalReducer = (state, action) => {
-    console.log(action);
-  
-    switch (action.type) {
-      case "ADD_USER":
-        console.log(action.payload);
-        return {
-          ...state,
-          user: action.payload,
-        };
+  console.log(action)
 
-        case "ADD_SEARCH_TERM":
-            return {
+  switch (action.type) {
+    case 'ADD_USER':
+      console.log(action.payload)
+      return {
+        ...state,
+        user: action.payload,
+      }
 
-                ...state,
-                searchTerm : action.payload
-            }
+    case 'ADD_SEARCH_TERM':
+      return {
+        ...state,
+        searchTerm: action.payload,
+      }
 
-            case "TOGGLE_LOCATION_DIALOGUE":
-            return {
+    case 'TOGGLE_LOCATION_DIALOGUE':
+      return {
+        ...state,
+        locationDialogue: action.payload,
+      }
 
-                ...state,
-                locationDialogue: action.payload
-            }
+    case 'TOGGLE_CITY_EDIT':
+      return {
+        ...state,
+        cityEdit: action.payload,
+      }
 
+    default:
+      return state
+  }
+}
 
-
-
-
-
-  
-      default:
-        return state;
-    }
-
-
-    
-  };
-  
-  export default GlobalReducer;
-  
+export default GlobalReducer

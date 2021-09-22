@@ -26,6 +26,7 @@ export default function CityDetail() {
   const [loading, setLoading] = useState(false)
   const { searchTerm } = useContext(GlobalContext)
   const { toggleLocationDialoge } = useContext(GlobalContext)
+  
 
   const { id } = useParams()
 

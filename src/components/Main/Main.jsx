@@ -9,7 +9,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Appbar from './Appbar/Appbar'
-import { GlobalContext } from '../context/GlobalContext'
+import { GlobalContext } from '../context/GlobalContext';
+import CityEdit from './Cities/CityEdit';
 
 const theme = createTheme()
 
@@ -27,6 +28,8 @@ export default function Main() {
         <Router>
           {stored !==null ? <Appbar /> : null}
           <LocationDetail/>
+          <CityEdit/>
+
           <Switch>
             <Route exact path="/">
               <Signin />

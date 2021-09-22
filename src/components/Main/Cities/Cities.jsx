@@ -20,7 +20,8 @@ export default function Cities() {
   const [cities, setCitites] = useState(null)
   const {searchTerm} = useContext(GlobalContext)
   const [BackInDown, BackInUp] = useAnimation();
-  const {user} = useContext(GlobalContext);
+  const {toggleCityEdit} = useContext(GlobalContext);
+
   const stored = localStorage.getItem('user')
 
 
@@ -43,6 +44,11 @@ export default function Cities() {
 
     fetchData()
   }, [])
+
+
+  const ViewCityEdit = (id) => {
+    toggleCityEdit({ id: id, open: true })
+  }
 
   return (
     <main ref={BackInDown().ref}>
@@ -107,9 +113,9 @@ export default function Cities() {
                             component="h2"
                             color="primary"
                           >
-                            {item.name}
+                            {item?.name}
                           </Typography>
-                          <Typography>code:{item.code}</Typography>
+                          <Typography>code:{item?.code}</Typography>
                           <Typography>Click view to find more about locations</Typography>
                         </CardContent>
                         <CardActions>
@@ -117,7 +123,7 @@ export default function Cities() {
                               className="link2"
                               variant="text"
                               size="small"
-                              href = {`/cityDetail/${item.id}`}
+                              href = {`/cityDetail/${item?.id}`}
                             >
                               View
                             </Button>
@@ -125,6 +131,8 @@ export default function Cities() {
                               className="link2"
                               variant="text"
                               size="small"
+                              onClick={(e) => ViewCityEdit(item?.id)}
+
                             >
                               Edit
                             </Button>
