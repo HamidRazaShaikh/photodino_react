@@ -147,9 +147,9 @@ export default function CityDetail() {
                           >
                             Details
                           </p>
-                          <Link className="link2">
+                          <p className="link2">
                             Edit
-                          </Link>
+                          </p>
                         </CardActions>
                       </Card>
                       </Grid>

@@ -115,7 +115,7 @@ export default function Cities() {
                           <Link to={`/cityDetail/${item.id}`} className="link2">
                             View
                           </Link>
-                          <Link className="link2">Edit</Link>
+                          <Link to = '/' className="link2">Edit</Link>
                         </CardActions>
                       </Card>
                     </Grid>
