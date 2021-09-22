@@ -11,3 +11,48 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.link-container {
+
+  display: flex;
+  justify-content: space-between;
+
+}
+
+
+.link {
+
+  text-decoration: none;
+  color : #fff;
+  transition: 300ms ease-in-out;
+  margin: 0 20px;
+
+}
+
+.link:hover{
+
+  transform: scale(1.2)
+}
+
+.link2 {
+
+  text-decoration: none;
+  color : #1976D2;
+  transition: 300ms ease-in-out;
+  margin: 0 20px;
+  cursor: pointer;
+
+}
+
+.link2:hover{
+
+  transform: scale(1.2);
+  cursor: pointer;
+
+}
+
+
+ 
+
+
+
