@@ -11,7 +11,9 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
-import Container from '@mui/material/Container'
+import Container from '@mui/material/Container';
+import Loadingstate from '../Loadingstate';
+
 
 import axios from 'axios'
 
@@ -24,69 +26,68 @@ export default function LocationDetail() {
     toggleLocationDialoge({ id: null, open: false })
   }
 
-  const fetchData = async () => {
-    const id = locationDialogue?.id
+  useEffect(() => {
+    const fetchData = async () => {
+      const id = await locationDialogue?.id
 
-    if (id) {
-      const response = await axios.get(
-        `https://api.photodino.com/locations/locations/${id}`,
-      )
+      if (id) {
+        const response = await axios.get(
+          `https://api.photodino.com/locations/locations/${id}`,
+        )
 
-      setDetails(response.data)
+        setDetails(response.data)
+      }
     }
-  }
 
-  fetchData()
+    fetchData()
+  }, [locationDialogue])
 
   console.log(details)
 
   return (
     <div>
       <Dialog open={locationDialogue.open} onClose={handleClose}>
-        <DialogTitle>Hotel Detail</DialogTitle>
+        <DialogTitle>Hotel Details</DialogTitle>
         <Divider />
         <DialogContent>
-        <table>
-        <tbody>
+          <table>
+            <tbody>
+              <tr>
+                <td>ID</td>
+                <td>{details?.id}</td>
+              </tr>
+              <tr>
+                <td>Name</td>
+                <td>{details?.name}</td>
+              </tr>
 
-
-            <tr>
-              <td>ID</td>
-              <td>{details?.id}</td>
-            </tr>
-            <tr>
-              <td>Name</td>
-              <td>{details?.name}</td>
-            </tr>
-
-            <tr>
-              <td>Rent</td>
-              <td>$ {details?.rent}</td>
-            </tr>
-            <tr>
-              <td>Phone</td>
-              <td>{details?.phone}</td>
-            </tr>
-            <tr>
-              <td>Email</td>
-              <td>{details?.email}</td>
-            </tr>
-            <tr>
-              <td>Street</td>
-              <td>{details?.street_name + ',' + details?.street_number}</td>
-            </tr>
-            <tr>
-              <td>Postal Code</td>
-              <td>{details?.postal_code}</td>
-            </tr>
-            <tr>
-              <td>status</td>
-              <td>{details?.status}</td>
-            </tr>
+              <tr>
+                <td>Rent</td>
+                <td>$ {details?.rent}</td>
+              </tr>
+              <tr>
+                <td>Phone</td>
+                <td>{details?.phone}</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>{details?.email}</td>
+              </tr>
+              <tr>
+                <td>Street</td>
+                <td>{details?.street_name + ',' + details?.street_number}</td>
+              </tr>
+              <tr>
+                <td>Postal Code</td>
+                <td>{details?.postal_code}</td>
+              </tr>
+              <tr>
+                <td>status</td>
+                <td>{details?.status}</td>
+              </tr>
             </tbody>
-
-            </table>
-
+          </table>
+          
         </DialogContent>
 
         <DialogActions>

@@ -17,16 +17,15 @@ import FilterResults from 'react-filter-search'
 import { Link } from 'react-router-dom'
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
-import Loadingstate from '../Loadingstate';
-import { GlobalContext } from '../../context/GlobalContext';
-
+import Loadingstate from '../Loadingstate'
+import { GlobalContext } from '../../context/GlobalContext'
 
 export default function CityDetail() {
   const [cityDetail, setCityDetail] = useState([])
   const [locationDetail, setLocationDetail] = useState([])
   const [loading, setLoading] = useState(false)
-  const {searchTerm} = useContext(GlobalContext);
-  const { toggleLocationDialoge } = useContext(GlobalContext);
+  const { searchTerm } = useContext(GlobalContext)
+  const { toggleLocationDialoge } = useContext(GlobalContext)
 
   const { id } = useParams()
 
@@ -51,14 +50,12 @@ export default function CityDetail() {
     }
 
     fetchData()
-  }, []);
-
+  }, [])
 
   // toggle locationDialogue
 
-  const ViewDetail = (id) =>{
-
-     toggleLocationDialoge({id : id, open : true})
+  const ViewDetail = (id) => {
+    toggleLocationDialoge({ id: id, open: true })
   }
 
   return (
@@ -112,46 +109,52 @@ export default function CityDetail() {
                     {results.map((item, index) => (
                       <Grid item xs={12} sm={6} md={4} key={index}>
                         <Card
-                        sx={{
-                          height: '100%',
-                          display: 'flex',
-                          flexDirection: 'column',
-                        }}
-                        elevation={2}
-                      >
-                        
-                        <CardContent sx={{ flexGrow: 1 }}>
-                          <Typography
-                            gutterBottom
-                            variant="h5"
-                            component="h2"
-                            color="primary"
-                          >
-                            {item?.data?.name}
-                          </Typography>
-                          <CardMedia
-                          component="img"
-                          image="https://source.unsplash.com/random"
-                          alt="random"
-                        />
-                          <Typography py = {2}>Status :{item?.data?.status}</Typography>
-                          <Typography>Click view to find locations</Typography>
-                        </CardContent>
-                        <CardActions>
-                          <p
-                            // to={`/cityDetail/${item.id}`}
-                            className="link2"
-                            onClick = {(e)=>ViewDetail(item?.data?.id)}
-
-
-                          >
-                            Details
-                          </p>
-                          <p className="link2">
-                            Edit
-                          </p>
-                        </CardActions>
-                      </Card>
+                          sx={{
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                          }}
+                          elevation={2}
+                        >
+                          <CardContent sx={{ flexGrow: 1 }}>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="h2"
+                              color="primary"
+                            >
+                              {item?.data?.name}
+                            </Typography>
+                            <CardMedia
+                              component="img"
+                              image="https://source.unsplash.com/random"
+                              alt="random"
+                            />
+                            <Typography py={2}>
+                              Status :{item?.data?.status}
+                            </Typography>
+                            <Typography>
+                              Click view to find locations
+                            </Typography>
+                          </CardContent>
+                          <CardActions>
+                            <Button
+                              className="link2"
+                              onClick={(e) => ViewDetail(item?.data?.id)}
+                              variant="text"
+                              size="small"
+                            >
+                              Details
+                            </Button>
+                            <Button
+                              className="link2"
+                              variant="text"
+                              size="small"
+                            >
+                              Edit
+                            </Button>
+                          </CardActions>
+                        </Card>
                       </Grid>
                     ))}
                   </Grid>

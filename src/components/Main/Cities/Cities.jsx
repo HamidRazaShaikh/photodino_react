@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -112,10 +113,22 @@ export default function Cities() {
                           <Typography>Click view to find more about locations</Typography>
                         </CardContent>
                         <CardActions>
-                          <Link to={`/cityDetail/${item.id}`} className="link2">
-                            View
-                          </Link>
-                          <Link to = '/' className="link2">Edit</Link>
+                        <Button
+                              className="link2"
+                              variant="text"
+                              size="small"
+                              href = {`/cityDetail/${item.id}`}
+                            >
+                              View
+                            </Button>
+                            <Button
+                              className="link2"
+                              variant="text"
+                              size="small"
+                            >
+                              Edit
+                            </Button>
+                          
                         </CardActions>
                       </Card>
                     </Grid>

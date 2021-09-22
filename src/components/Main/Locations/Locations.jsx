@@ -16,7 +16,7 @@ import useAnimation from '../../Animations'
 
 export default function Cities() {
   const [locations, setLocations] = useState(null)
-  const {searchTerm} = useContext(GlobalContext)
+  const { searchTerm } = useContext(GlobalContext)
   const [BackInDown, BackInUp] = useAnimation()
 
   useEffect(() => {
@@ -91,8 +91,12 @@ export default function Cities() {
                           <Typography>Click view to find locations</Typography>
                         </CardContent>
                         <CardActions>
-                          <Button size="small">View</Button>
-                          <Button size="small">Edit</Button>
+                          <Button className="link2" variant="text" size="small">
+                            View
+                          </Button>
+                          <Button className="link2" variant="text" size="small">
+                            Edit
+                          </Button>
                         </CardActions>
                       </Card>
                     </Grid>
