@@ -9,31 +9,41 @@ import Button from '@mui/material/Button'
 import useAnimation from '../../Animations'
 import axios from 'axios'
 
-export default function AddCity() {
-  const [cityInfo, setCityInfo] = useState({
+export default function AddLocation() {
+  const [LocationInfo, setLocationInfo] = useState({
     name: '',
+    rent : '',
+    email: '',
+    phone : '',
+    coordinates : '',
+    street_number : '',
+    street_name:'',
+    postal_code :'',
+    status  :'available',
+    city : '',
     code: '',
   })
   const [BackInDown, BackInUp] = useAnimation()
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const addCity = async () => {
-      await axios
-        .post('https://api.photodino.com/locations/cities/', cityInfo)
-        .then((response) => console.log(response))
-        .catch((error) => console.log(error))
-    }
+    const addLocation = async () => {
+        await axios
+          .post('https://api.photodino.com/locations/locations/', LocationInfo)
+          .then((response) => console.log(response))
+          .catch((error) => console.log(error))
+      }
 
-    addCity()
+      addLocation()
+    
   }
 
   const inputFunction = (e) => {
     e.preventDefault()
 
     const { name, value } = e.target
-    setCityInfo((prval) => {
+    setLocationInfo((prval) => {
       return {
         ...prval,
         [name]: value,
@@ -41,14 +51,7 @@ export default function AddCity() {
     })
   }
 
-  const addCity = async () => {
-    await axios
-      .post('https://api.photodino.com/locations/cities/', cityInfo)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error))
-  }
-
-  console.log(cityInfo)
+  
   return (
     <div>
       <main ref={BackInDown().ref}>
@@ -68,7 +71,7 @@ export default function AddCity() {
               color="text.primary"
               gutterBottom
             >
-              New city
+              New location
             </Typography>
 
             <Typography
@@ -78,11 +81,11 @@ export default function AddCity() {
               paragraph
               color="primary"
             >
-              Please fill the desired fields to add city
+              Please fill the desired fields to add location
             </Typography>
           </Container>
         </Box>
-        <Container maxWidth="xs">
+        <Container maxWidth="sm">
           {/* End hero unit */}
 
           <Grid container>
@@ -93,23 +96,37 @@ export default function AddCity() {
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm = {6}>
                   <TextField
                     required
                     fullWidth
-                    label="Name"
-                    name="Name"
-                    value={cityInfo.name}
+                    label="name"
+                    name="name"
+                    value={LocationInfo.name}
                     onChange={inputFunction}
                   />
                 </Grid>
+
+                <Grid item xs={12} sm = {6}>
+                  <TextField
+                    required
+                    fullWidth
+                    label="Rent"
+                    name="Rent"
+                    value={LocationInfo.name}
+                    onChange={inputFunction}
+                  />
+                </Grid>
+
+
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
-                    name="Code"
-                    value={cityInfo.code}
-                    label="Code"
+                    name="code"
+                    value={LocationInfo.code}
+                    label="code"
+                    autoComplete="new-password"
                     onChange={inputFunction}
                   />
                 </Grid>

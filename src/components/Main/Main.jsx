@@ -12,6 +12,8 @@ import Appbar from './Appbar/Appbar'
 import { GlobalContext } from '../context/GlobalContext';
 import CityEdit from './Cities/CityEdit';
 import AddCity from './Cities/AddCity';
+import AddLocation from './Locations/AddLocation';
+
 
 const theme = createTheme()
 
@@ -48,6 +50,10 @@ export default function Main() {
 
             <Route path="/addcity">
               <AddCity/>
+            </Route>
+
+            <Route path="/addLocation">
+              <AddLocation/>
             </Route>
           </Switch>
         </Router>

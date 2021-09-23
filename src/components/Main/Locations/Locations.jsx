@@ -14,7 +14,10 @@ import FilterResults from 'react-filter-search'
 import Loadingstate from '../Loadingstate'
 import useAnimation from '../../Animations'
 import DeleteLocationAlert from './DeleteAlertLocations'
-import { DeleteLocation } from '../../Api/Api'
+import { DeleteLocation } from '../../Api/Api';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+
 
 export default function Locations() {
   const [locations, setLocations] = useState(null)
@@ -66,7 +69,12 @@ export default function Locations() {
             color="text.primary"
             gutterBottom
           >
-            Locations
+            Locations{' '}
+
+            <Fab color="primary" aria-label="add" size="small" href = '/addLocation'>
+              <AddIcon />
+            </Fab>
+
           </Typography>
           <Typography
             variant="h5"
