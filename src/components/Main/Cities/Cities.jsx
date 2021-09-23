@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Button from '@mui/material/Button';
+import React, { useState, useEffect, useContext } from 'react'
+import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -13,41 +13,64 @@ import { GlobalContext } from '../../context/GlobalContext'
 import FilterResults from 'react-filter-search'
 import { Link } from 'react-router-dom'
 import Loadingstate from '../Loadingstate'
-import useAnimation from '../../Animations';
+import useAnimation from '../../Animations'
+import DeleteCityAlert from './DeleteAlertCity'
+import { DeleteCity } from '../../Api/Api'
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 
 export default function Cities() {
   const [cities, setCitites] = useState(null)
-  const {searchTerm} = useContext(GlobalContext)
-  const [BackInDown, BackInUp] = useAnimation();
-  const {toggleCityEdit} = useContext(GlobalContext);
+  const { searchTerm } = useContext(GlobalContext)
+  const [alert, setAlert] = useState(false)
+  const [wantDelete, setWantDelete] = useState(false)
+  const { toggleCityEdit } = useContext(GlobalContext)
+  const [BackInDown, BackInUp] = useAnimation()
+
+  console.log(cities)
+
+  // const { deleteCity } = useContext(GlobalContext)
+  // const { cityAlert } = useContext(GlobalContext)
+  // const { toggleCityAlert } = useContext(GlobalContext)
 
   const stored = localStorage.getItem('user')
 
-
-  if(stored) {
-    window.history.pushState(null, null, window.location.href);
-    window.onpopstate = function(event) {
-      window.history.go(1);
-    };
+  if (stored) {
+    window.history.pushState(null, null, window.location.href)
+    window.onpopstate = function (event) {
+      window.history.go(1)
+    }
   }
-
-
-
-
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getAllCites()
       setCitites(data)
+
+      console.log(data)
     }
 
     fetchData()
   }, [])
 
-
   const ViewCityEdit = (id) => {
     toggleCityEdit({ id: id, open: true })
+  }
+
+  const cityDelete = (id) => {
+    setAlert(true)
+    if (wantDelete) {
+      DeleteCity(id)
+    }
+  }
+
+  const toggleAlert = () => {
+    setAlert(false)
+  }
+
+  const WantDelete = (value) => {
+    setWantDelete(value)
   }
 
   return (
@@ -68,8 +91,12 @@ export default function Cities() {
             color="text.primary"
             gutterBottom
           >
-            Cities
+            Cities{' '}
+            <Fab color="primary" aria-label="add" size="small" href = '/addcity'>
+              <AddIcon />
+            </Fab>
           </Typography>
+
           <Typography
             variant="h5"
             align="center"
@@ -85,6 +112,13 @@ export default function Cities() {
       {cities ? (
         <Container maxWidth="md">
           {/* End hero unit */}
+
+          {alert ? (
+            <DeleteCityAlert
+              WantDelete={WantDelete}
+              toggleAlert={toggleAlert}
+            />
+          ) : null}
           <Grid container>
             <FilterResults
               value={searchTerm}
@@ -116,27 +150,36 @@ export default function Cities() {
                             {item?.name}
                           </Typography>
                           <Typography>code:{item?.code}</Typography>
-                          <Typography>Click view to find more about locations</Typography>
+                          <Typography>
+                            Click view to find more about locations in this city
+                          </Typography>
                         </CardContent>
                         <CardActions>
-                        <Button
-                              className="link2"
-                              variant="text"
-                              size="small"
-                              href = {`/cityDetail/${item?.id}`}
-                            >
-                              View
-                            </Button>
-                            <Button
-                              className="link2"
-                              variant="text"
-                              size="small"
-                              onClick={(e) => ViewCityEdit(item?.id)}
+                          <Button
+                            className="link2"
+                            variant="text"
+                            size="small"
+                            href={`/cityDetail/${item?.id}`}
+                          >
+                            View
+                          </Button>
+                          <Button
+                            className="link2"
+                            variant="text"
+                            size="small"
+                            onClick={(e) => ViewCityEdit(item?.id)}
+                          >
+                            Edit
+                          </Button>
 
-                            >
-                              Edit
-                            </Button>
-                          
+                          <Button
+                            className="link2"
+                            variant="text"
+                            size="small"
+                            onClick={(e) => cityDelete(item?.id)}
+                          >
+                            Delete
+                          </Button>
                         </CardActions>
                       </Card>
                     </Grid>

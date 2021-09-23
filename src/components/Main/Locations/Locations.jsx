@@ -13,10 +13,15 @@ import { GlobalContext } from '../../context/GlobalContext'
 import FilterResults from 'react-filter-search'
 import Loadingstate from '../Loadingstate'
 import useAnimation from '../../Animations'
+import DeleteLocationAlert from './DeleteAlertLocations'
+import { DeleteLocation } from '../../Api/Api'
 
-export default function Cities() {
+export default function Locations() {
   const [locations, setLocations] = useState(null)
   const { searchTerm } = useContext(GlobalContext)
+  const [alert, setAlert] = useState(false)
+  const [wantDelete, setWantDelete] = useState(false)
+
   const [BackInDown, BackInUp] = useAnimation()
 
   useEffect(() => {
@@ -27,6 +32,21 @@ export default function Cities() {
 
     fetchData()
   }, [])
+
+  const locationDelete = (id) => {
+    setAlert(true)
+    if (wantDelete) {
+      DeleteLocation(id)
+    }
+  }
+
+  const toggleAlert = () => {
+    setAlert(false)
+  }
+
+  const WantDelete = (value) => {
+    setWantDelete(value)
+  }
 
   return (
     <main ref={BackInDown().ref}>
@@ -62,6 +82,14 @@ export default function Cities() {
       {locations ? (
         <Container maxWidth="md">
           {/* End hero unit */}
+
+          {alert ? (
+            <DeleteLocationAlert
+              WantDelete={WantDelete}
+              toggleAlert={toggleAlert}
+            />
+          ) : null}
+
           <Grid>
             <FilterResults
               value={searchTerm}
@@ -96,6 +124,14 @@ export default function Cities() {
                           </Button>
                           <Button className="link2" variant="text" size="small">
                             Edit
+                          </Button>
+                          <Button
+                            className="link2"
+                            variant="text"
+                            size="small"
+                            onClick={(e) => locationDelete(item?.id)}
+                          >
+                            Delete
                           </Button>
                         </CardActions>
                       </Card>

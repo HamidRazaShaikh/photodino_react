@@ -32,7 +32,7 @@ export default function LocationDetail() {
 
       if (id) {
         const response = await axios.get(
-          `https://api.photodino.com/locations/locations/${id}`,
+          `https://api.photodino.com/locations/locations/${id}/`,
         )
 
         setDetails(response.data)

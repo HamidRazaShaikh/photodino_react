@@ -1,26 +1,25 @@
 import React, { useState, useContext, useEffect } from 'react'
-import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import { GlobalContext } from '../../context/GlobalContext'
 import Divider from '@mui/material/Divider'
-import PropTypes from 'prop-types'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import Typography from '@mui/material/Typography'
+import { getCityDetail } from '../../Api/Api';
 import Box from '@mui/material/Box'
-import { getCityDetail } from '../../Api/Api'
+import TextField from '@mui/material/TextField'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import axios from 'axios'
+
 
 export default function CityEdit() {
   const { cityEdit } = useContext(GlobalContext)
   const { toggleCityEdit } = useContext(GlobalContext)
-  const [value, setValue] = useState(0)
-
   const [cityDetail, setCityDetail] = useState([])
 
-  const id = cityEdit?.id
+  const id = cityEdit?.id;
+
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +30,7 @@ export default function CityEdit() {
     }
 
     fetchData()
-  }, [cityEdit])
+  }, [])
 
   console.log(cityDetail)
 
@@ -39,43 +38,42 @@ export default function CityEdit() {
     toggleCityEdit({ id: null, open: false })
   }
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
-  }
+  // for format
 
-  // tabs function
+  const [updatedDetail, setUpdatedDetail] = useState({
+    id: '',
+    locations: [],
+    name: '',
+    code: '',
+    time_added: '12pm',
+  })
 
-  function TabPanel(props) {
-    const { children, value, index, ...other } = props
+  const handleSubmit = (e) => {
+    e.preventDefault()
 
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    )
-  }
-
-  TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-  }
-
-  function a11yProps(index) {
-    return {
-      id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
+    const updateData = async () => {
+      await axios.put(`https://api.photodino.com/locations/cities/${id}`, {
+        params: updatedDetail,
+      })
     }
+
+    updateData()
+
+    console.log(updatedDetail)
+
+    handleClose()
+  }
+
+  const inputFunction = (e) => {
+    e.preventDefault()
+
+    const { name, value } = e.target
+    setUpdatedDetail((prval) => {
+      return {
+        ...prval,
+        [name]: value,
+      }
+    })
   }
 
   return (
@@ -84,29 +82,70 @@ export default function CityEdit() {
         <DialogTitle>Edit city</DialogTitle>
         <Divider />
         <DialogContent>
-          <Box sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                aria-label="basic tabs example"
-              >
-                <Tab label="Update" {...a11yProps(0)} />
-                <Tab label="Delete" {...a11yProps(1)} />
-              </Tabs>
-            </Box>
-            <TabPanel value={value} index={0}>
-              update
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              delete{' '}
-            </TabPanel>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="id"
+                  value={updatedDetail.id}
+                  required
+                  fullWidth
+                  label="id"
+                  autoFocus
+                  onChange={inputFunction}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  label="Locations"
+                  name="locations"
+                  value={updatedDetail.locations}
+                  autoComplete="lname"
+                  onChange={inputFunction}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  label="name"
+                  name="name"
+                  value={updatedDetail.name}
+                  autoComplete="email"
+                  onChange={inputFunction}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  name="code"
+                  value={updatedDetail.code}
+                  label="code"
+                  autoComplete="new-password"
+                  onChange={inputFunction}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              style={{ textTransform: 'none' }}
+            >
+              Update
+            </Button>
           </Box>
         </DialogContent>
-
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-        </DialogActions>
       </Dialog>
     </div>
   )

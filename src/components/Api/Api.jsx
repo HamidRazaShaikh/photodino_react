@@ -15,7 +15,7 @@ export const getAllCites = async (searchObj) => {
 
 export const getAllLocations = async () => {
     try {
-      const response = await axios.get(`${URL}locations`)
+      const response = await axios.get(`${URL}locations/`)
       return response
     } catch (error) {
       console.log(error)
@@ -26,13 +26,13 @@ export const getAllLocations = async () => {
 
     console.log(id)
     try {
-      const response = await axios.get(`${URL}cities/${id}`)
+      const response = await axios.get(`${URL}cities/${id}/`)
       const data = {
 
-        name : await response.data.name,
-        id : await response.data.id,
-        locations : await response.data.locations,
-        code : await  response.data.code
+        name : await response?.data?.name,
+        id : await response?.data?.id,
+        locations : await response?.data?.locations,
+        code : await  response?.data?.code
 
     };
 
@@ -48,11 +48,37 @@ export const getAllLocations = async () => {
 
     console.log(id)
     try {
-      const response = await axios.get(`${URL}locations/${id}`)
+      const response = await axios.get(`${URL}locations/${id}/`)
       
       return response
     } catch (error) {
       console.log(error)
     }
   }
+
+
+  export const DeleteCity = async (id) => {
+
+    try {
+      const response =  await axios.delete(`${URL}cities/${id}/`)
+      console.log(response)
+
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   
+  export const DeleteLocation = async (id) => {
+
+    try {
+      const response =  await axios.delete(`${URL}locations/${id}/`)
+      console.log(response)
+
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+

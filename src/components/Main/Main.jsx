@@ -11,6 +11,7 @@ import Box from '@mui/material/Box'
 import Appbar from './Appbar/Appbar'
 import { GlobalContext } from '../context/GlobalContext';
 import CityEdit from './Cities/CityEdit';
+import AddCity from './Cities/AddCity';
 
 const theme = createTheme()
 
@@ -26,7 +27,7 @@ export default function Main() {
       <CssBaseline />
       <div>
         <Router>
-          {stored !==null ? <Appbar /> : null}
+          {stored !==null  ? <Appbar /> : null}
           <LocationDetail/>
           <CityEdit/>
 
@@ -43,6 +44,10 @@ export default function Main() {
 
             <Route path="/cityDetail/:id">
               <CityDetail />
+            </Route>
+
+            <Route path="/addcity">
+              <AddCity/>
             </Route>
           </Switch>
         </Router>
