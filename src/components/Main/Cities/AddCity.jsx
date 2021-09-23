@@ -6,10 +6,18 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
-import useAnimation from '../../Animations'
+import useAnimation from '../../Animations';
+import axios from 'axios';
 
 export default function AddCity() {
-  const [cityInfo, setCityInfo] = useState({})
+  const [cityInfo, setCityInfo] = useState({
+      id : null ,
+      name : '',
+      code : '',
+      locations : '',
+      timtime_added : Date.now()
+
+  })
   const [BackInDown, BackInUp] = useAnimation()
 
   const handleSubmit = (e) => {
@@ -27,6 +35,20 @@ export default function AddCity() {
       }
     })
   }
+
+  const addCity = async () =>{
+
+    await axios.post('https://api.photodino.com/locations/cities/', cityInfo).then((response)=> console.log(response)).catch((error)=> console.log(error))
+
+    
+
+
+
+  }
+
+
+
+  console.log(cityInfo)
   return (
     <div>
       <main ref={BackInDown().ref}>
@@ -75,7 +97,8 @@ export default function AddCity() {
                   <TextField
                     autoComplete="fname"
                     name="id"
-                    value={cityInfo.id}
+                    value={cityInfo.id}   
+                    type = 'number'                 
                     required
                     fullWidth
                     label="id"
@@ -118,11 +141,12 @@ export default function AddCity() {
                 </Grid>
               </Grid>
               <Button
-                type="submit"
+                // type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                style={{ textTransform: 'none' }}
+                onClick = {addCity}
+                
               >
                 Add
               </Button>
