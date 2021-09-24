@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect} from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -47,7 +47,12 @@ export default function Signin({ toggler }) {
   const { addUser } = useContext(GlobalContext)
 
   // for animations
-  const [BackInDown, BackInUp] = useAnimation()
+  const [BackInDown, BackInUp] = useAnimation();
+
+useEffect(()=>{
+
+  return localStorage.removeItem('user')
+},[])
 
   const inputFunction = (e) => {
     e.preventDefault()

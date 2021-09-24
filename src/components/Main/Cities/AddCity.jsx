@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import useAnimation from '../../Animations'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 
 export default function AddCity() {
   const [cityInfo, setCityInfo] = useState({
@@ -15,18 +15,21 @@ export default function AddCity() {
     code: '',
   })
   const [BackInDown, BackInUp] = useAnimation()
+  const history = useHistory()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const addCity = async () => {
-      await axios
-        .post('https://api.photodino.com/locations/cities/', cityInfo)
-        .then((response) => console.log(response))
-        .catch((error) => console.log(error))
-    }
+    return await axios
+      .post('https://api.photodino.com/locations/cities/', cityInfo)
+      .then((response) => {
+        if (response) {
+          console.log(response);
+          history.push('/cities')
+        }
+      })
 
-    addCity()
+      .catch((error) => console.log(error))
   }
 
   const inputFunction = (e) => {
@@ -39,13 +42,6 @@ export default function AddCity() {
         [name]: value,
       }
     })
-  }
-
-  const addCity = async () => {
-    await axios
-      .post('https://api.photodino.com/locations/cities/', cityInfo)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error))
   }
 
   console.log(cityInfo)
@@ -98,7 +94,7 @@ export default function AddCity() {
                     required
                     fullWidth
                     label="Name"
-                    name="Name"
+                    name="name"
                     value={cityInfo.name}
                     onChange={inputFunction}
                   />
@@ -107,7 +103,7 @@ export default function AddCity() {
                   <TextField
                     required
                     fullWidth
-                    name="Code"
+                    name="code"
                     value={cityInfo.code}
                     label="Code"
                     onChange={inputFunction}

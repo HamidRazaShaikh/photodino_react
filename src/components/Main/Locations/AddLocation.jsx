@@ -12,31 +12,65 @@ import axios from 'axios'
 export default function AddLocation() {
   const [LocationInfo, setLocationInfo] = useState({
     name: '',
-    rent : '',
+    rent: '',
     email: '',
-    phone : '',
-    coordinates : '',
-    street_number : '',
-    street_name:'',
-    postal_code :'',
-    status  :'available',
-    city : '',
-    code: '',
+    phone: '',
+    coordinates: '',
+    street_number: 0,
+    street_name: '',
+    postal_code: 0,
+    status: 'available',
+    city: 0,
   })
   const [BackInDown, BackInUp] = useAnimation()
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const addLocation = async () => {
-        await axios
-          .post('https://api.photodino.com/locations/locations/', LocationInfo)
-          .then((response) => console.log(response))
-          .catch((error) => console.log(error))
+      const jsondata = JSON.stringify(LocationInfo)
+
+      const input = {
+        name: 'hamid',
+        rent: '109.49',
+        email: 'johndoe@joecorp.de',
+        phone: '+49 (012) 308',
+        coordinates: '49.045,10.442',
+        street_number: 65,
+        street_name: 'Hartmannweg',
+        postal_code: 52478,
+        status: 'available',
+        city: 232,
       }
 
-      addLocation()
-    
+      const jsonInput = JSON.stringify(input)
+
+      console.log(input)
+
+      console.log(jsondata)
+      // await axios
+      //   .post('https://api.photodino.com/locations/locations/', jsonInput,   {headers: {
+      //     "Content-Type": "application/json"
+      //   }},
+      // )
+      //   .then((response) => console.log(response))
+      //   .catch((error) => console.log(error))
+
+      fetch('https://api.photodino.com/locations/locations/', {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(input),
+      })
+        .then((res) => {
+          console.log(res)
+        })
+        // ur data is here
+        .catch((err) => console.log('api Erorr: ', err))
+    }
+
+    addLocation()
   }
 
   const inputFunction = (e) => {
@@ -51,7 +85,8 @@ export default function AddLocation() {
     })
   }
 
-  
+  console.log(LocationInfo)
+
   return (
     <div>
       <main ref={BackInDown().ref}>
@@ -96,7 +131,7 @@ export default function AddLocation() {
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
-                <Grid item xs={12} sm = {6}>
+                <Grid item xs={12} sm={6}>
                   <TextField
                     required
                     fullWidth
@@ -107,26 +142,89 @@ export default function AddLocation() {
                   />
                 </Grid>
 
-                <Grid item xs={12} sm = {6}>
+                <Grid item xs={12} sm={6}>
                   <TextField
                     required
                     fullWidth
                     label="Rent"
-                    name="Rent"
-                    value={LocationInfo.name}
+                    name="rent"
+                    value={LocationInfo.rent}
                     onChange={inputFunction}
                   />
                 </Grid>
 
-
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
                   <TextField
                     required
                     fullWidth
-                    name="code"
-                    value={LocationInfo.code}
-                    label="code"
-                    autoComplete="new-password"
+                    label="Email"
+                    name="email"
+                    value={LocationInfo.email}
+                    onChange={inputFunction}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    label="Phone"
+                    name="phone"
+                    value={LocationInfo.phone}
+                    onChange={inputFunction}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    label="Coordinates"
+                    name="coordinates"
+                    value={LocationInfo.coordinates}
+                    onChange={inputFunction}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    type="number"
+                    label="Postal code"
+                    name="postal_code"
+                    value={LocationInfo.postal_code}
+                    onChange={inputFunction}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    label="Street name"
+                    name="street_name"
+                    value={LocationInfo.street_name}
+                    onChange={inputFunction}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    type="number"
+                    label="Street number"
+                    name="street_number"
+                    value={LocationInfo.street_number}
+                    onChange={inputFunction}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    type="number"
+                    label="City"
+                    name="city"
+                    value={LocationInfo.city}
                     onChange={inputFunction}
                   />
                 </Grid>

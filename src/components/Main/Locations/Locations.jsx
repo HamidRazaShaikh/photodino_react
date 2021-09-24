@@ -23,7 +23,9 @@ export default function Locations() {
   const [locations, setLocations] = useState(null)
   const { searchTerm } = useContext(GlobalContext)
   const [alert, setAlert] = useState(false)
-  const [wantDelete, setWantDelete] = useState(false)
+  const [wantDelete, setWantDelete] = useState(false);
+  const { toggleLocationDialoge } = useContext(GlobalContext)
+
 
   const [BackInDown, BackInUp] = useAnimation()
 
@@ -51,6 +53,9 @@ export default function Locations() {
     setWantDelete(value)
   }
 
+  const ViewDetail = (id) => {
+    toggleLocationDialoge({ id: id, open: true })
+  }
   return (
     <main ref={BackInDown().ref}>
       {/* Hero unit */}
@@ -123,13 +128,18 @@ export default function Locations() {
                           <Typography gutterBottom variant="h5" component="h2">
                             {item.name}
                           </Typography>
-                          <Typography>city code:{item.city}</Typography>
+                          <Typography>city code:{item?.city}</Typography>
                           <Typography>Click view to find locations</Typography>
                         </CardContent>
                         <CardActions>
-                          <Button className="link2" variant="text" size="small">
-                            View
-                          </Button>
+                        <Button
+                              className="link2"
+                              onClick={(e) => ViewDetail(item?.id)}
+                              variant="text"
+                              size="small"
+                            >
+                              Details
+                            </Button>
                           <Button className="link2" variant="text" size="small">
                             Edit
                           </Button>

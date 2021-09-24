@@ -18,6 +18,7 @@ import DeleteCityAlert from './DeleteAlertCity'
 import { DeleteCity } from '../../Api/Api'
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import CityEdit from './CityEdit'
 
 
 export default function Cities() {
@@ -27,6 +28,8 @@ export default function Cities() {
   const [wantDelete, setWantDelete] = useState(false)
   const { toggleCityEdit } = useContext(GlobalContext)
   const [BackInDown, BackInUp] = useAnimation()
+  const { cityEdit } = useContext(GlobalContext);
+
 
   console.log(cities)
 
@@ -47,12 +50,11 @@ export default function Cities() {
     const fetchData = async () => {
       const data = await getAllCites()
       setCitites(data)
-
       console.log(data)
     }
 
     fetchData()
-  }, [])
+  }, [cityEdit])
 
   const ViewCityEdit = (id) => {
     toggleCityEdit({ id: id, open: true })

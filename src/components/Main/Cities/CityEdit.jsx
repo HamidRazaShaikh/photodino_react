@@ -4,22 +4,19 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import { GlobalContext } from '../../context/GlobalContext'
 import Divider from '@mui/material/Divider'
-import { getCityDetail } from '../../Api/Api';
+import { getCityDetail } from '../../Api/Api'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import axios from 'axios'
 
-
 export default function CityEdit() {
   const { cityEdit } = useContext(GlobalContext)
   const { toggleCityEdit } = useContext(GlobalContext)
   const [cityDetail, setCityDetail] = useState([])
 
-  const id = cityEdit?.id;
-
-  
+  const id = cityEdit?.id
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,18 +45,16 @@ export default function CityEdit() {
     time_added: '12pm',
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const updateData = async () => {
-      await axios.put(`https://api.photodino.com/locations/cities/${id}`, {
-        params: updatedDetail,
-      })
-    }
+      await axios
+        .put(`https://api.photodino.com/locations/cities/${id}/`, updatedDetail)
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error))
+    
 
-    updateData()
-
-    console.log(updatedDetail)
+    
 
     handleClose()
   }
@@ -89,30 +84,7 @@ export default function CityEdit() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="fname"
-                  name="id"
-                  value={updatedDetail.id}
-                  required
-                  fullWidth
-                  label="id"
-                  autoFocus
-                  onChange={inputFunction}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  label="Locations"
-                  name="locations"
-                  value={updatedDetail.locations}
-                  autoComplete="lname"
-                  onChange={inputFunction}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -123,7 +95,7 @@ export default function CityEdit() {
                   onChange={inputFunction}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
